@@ -1,1 +1,42 @@
-
+[
+    {
+      "Year": "2018-2019",
+      "Semester": "First Semester",
+      "The Programs": "Number of students enrolled in bachelor programs",
+      "Nationality": "Bahraini",
+      "Colleges": "College of IT",
+      "Number of Student:": 1622
+    },
+    {
+      "Year": "2018-2019",
+      "Semester": "First Semester",
+      "The Programs": "Number of students enrolled in bachelor programs",
+      "Nationality": "GCC National",
+      "Colleges": "College of IT",
+      "Number of Student:": 146
+    },
+    {
+      "Year": "2018-2019",
+      "Semester": "Second Semester",
+      "The Programs": "Number of students enrolled in bachelor programs",
+      "Nationality": "Other",
+      "Colleges": "College of IT",
+      "Number of Student:": 323
+    },
+    {
+      "Year": "2018-2019",
+      "Semester": "Summer Semester",
+      "The Programs": "Number of students enrolled in bachelor programs",
+      "Nationality": "Bahraini",
+      "Colleges": "College of IT",
+      "Number of Student:": 1228
+    },
+    {
+      "Year": "2019-2020",
+      "Semester": "Summer Semester",
+      "The Programs": "Number of students enrolled in bachelor programs",
+      "Nationality": "GCC National",
+      "Colleges": "College of IT",
+      "Number of Student:": 72
+    }
+  ]
