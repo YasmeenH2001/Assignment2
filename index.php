@@ -1,6 +1,33 @@
 <?php
-// Include the fetch_data.php file to get the student data
-include('fetch_data.php');
+// Database connection details
+$servername = "localhost";
+$username = "your_db_username";
+$password = "your_db_password";
+$dbname = "your_db_name";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password , $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Fetch data from the database
+$sql = "SELECT Year, Semester, `The Programs`, Nationality, Colleges, `Number of Student:` FROM students";
+$result = $conn->query($sql);
+
+// Check if there are results
+if ($result->num_rows > 0) {
+    $records = [];
+    while($row = $result->fetch_assoc()) {
+        $records[] = $row;
+    }
+    $result = ['records' => $records];
+} else {
+    $result = ['records' => []];
+}
+$conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -36,17 +63,16 @@ include('fetch_data.php');
                 <?php
                 // Loop through the records and display them in the table
                 foreach ($result['records'] as $record):
-                    // Adjust the keys if needed based on the JSON structure
-                    $year = isset($record['fields']['Year']) ? $record['fields']['Year'] : 'N/A';
-                    $semester = isset($record['fields']['Semester']) ? $record['fields']['Semester'] : 'N/A';
-                    $programs = isset($record['fields']['The Programs']) ? $record['fields']['The Programs'] : 'N/A';
-                    $nationality = isset($record['fields']['Nationality']) ? $record['fields']['Nationality'] : 'N/A';
-                    $colleges = isset($record['fields']['Colleges']) ? $record['fields']['Colleges'] : 'N/A';
-                    $studentCount = isset($record['fields']['Number of Student:']) ? $record['fields']['Number of Student:'] : 'N/A';
+                    $year = isset($record['Year']) ? $record['Year'] : 'N/A';
+                    $semester = isset($record['Semester']) ? $record['Semester'] : 'N/A';
+                    $programs = isset($record['The Programs']) ? $record['The Programs'] : 'N/A';
+                    $nationality = isset($record['Nationality']) ? $record['Nationality'] : 'N/A';
+                    $colleges = isset($record['Colleges']) ? $record['Colleges'] : 'N/A';
+                    $studentCount = isset($record['Number of Student:']) ? $record['Number of Student:'] : 'N/A';
                     echo "<tr>
                             <td>$year</td>
                             <td>$semester</td>
-                            <td>$ programs</td>
+                            <td>$programs</td>
                             <td>$nationality</td>
                             <td>$colleges</td>
                             <td>$studentCount</td>
