@@ -23,16 +23,34 @@ include('fetch_data.php');
         
         <table>
             <thead>
-                <tr><th>Nationality</th><th>Student Count</th></tr>
+                <tr>
+                    <th>Year</th>
+                    <th>Semester</th>
+                    <th>The Programs</th>
+                    <th>Nationality</th>
+                    <th>Colleges</th>
+                    <th>Number of Students</th>
+                </tr>
             </thead>
             <tbody>
                 <?php
                 // Loop through the records and display them in the table
                 foreach ($result['records'] as $record):
                     // Adjust the keys if needed based on the JSON structure
-                    $nationality = isset($record['fields']['nationality']) ? $record['fields']['nationality'] : 'N/A';
-                    $student_count = isset($record['fields']['student_count']) ? $record['fields']['student_count'] : 'N/A';
-                    echo "<tr><td>$nationality</td><td>$student_count</td></tr>";
+                    $year = isset($record['fields']['Year']) ? $record['fields']['Year'] : 'N/A';
+                    $semester = isset($record['fields']['Semester']) ? $record['fields']['Semester'] : 'N/A';
+                    $programs = isset($record['fields']['The Programs']) ? $record['fields']['The Programs'] : 'N/A';
+                    $nationality = isset($record['fields']['Nationality']) ? $record['fields']['Nationality'] : 'N/A';
+                    $colleges = isset($record['fields']['Colleges']) ? $record['fields']['Colleges'] : 'N/A';
+                    $studentCount = isset($record['fields']['Number of Student:']) ? $record['fields']['Number of Student:'] : 'N/A';
+                    echo "<tr>
+                            <td>$year</td>
+                            <td>$semester</td>
+                            <td>$ programs</td>
+                            <td>$nationality</td>
+                            <td>$colleges</td>
+                            <td>$studentCount</td>
+                          </tr>";
                 endforeach;
                 ?>
             </tbody>
@@ -46,4 +64,3 @@ include('fetch_data.php');
     </div>
 </body>
 </html>
-
