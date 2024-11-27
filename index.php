@@ -1,92 +1,74 @@
-<?php
-// Database connection details
-$servername = "localhost";
-$username = "your_db_username";
-$password = "your_db_password";
-$dbname = "your_db_name";
-
-// Create connection
-$conn = new mysqli($servername, $username, $password , $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-// Fetch data from the database
-$sql = "SELECT Year, Semester, `The Programs`, Nationality, Colleges, `Number of Student:` FROM students";
-$result = $conn->query($sql);
-
-// Check if there are results
-if ($result->num_rows > 0) {
-    $records = [];
-    while($row = $result->fetch_assoc()) {
-        $records[] = $row;
-    }
-    $result = ['records' => $records];
-} else {
-    $result = ['records' => []];
-}
-$conn->close();
-?>
+<?php 
+$url= "https://data.gov.bh/api/explore/v2.1/catalog/datasets/01-statistics-of-students-nationalities_updated/records?where=colleges%20like%20%22IT%22%20AND%20the_programs%20like%20%22bachelor%22&limit=100"; 
+$response= file_get_contents($url);
+$data = json_decode($response , true); 
+if(!$data || !isset($data["results"])){ die('Error fetching the data from API'); } 
+$result=$data["results"]; 
+?> 
 
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UOB Student Nationalities</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/picocss@1.6.3/dist/pico.min.css">
-    <link rel="stylesheet" href="style.css"> <!-- Link to custom stylesheet -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #6c757d;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        tr:hover {
+            background-color: #ddd;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <h1>University of Bahrain Student Nationalities</h1>
-        
-        <?php
-        // Check if the result data exists and is an array
-        if (isset($result['records']) && is_array($result['records'])):
-        ?>
-        
-        <table>
-            <thead>
+    <h1>UOB IT Bachelor's Students by Nationality</h1>
+    <table>
+        <thead>
+            <tr> 
+                <th>Year</th>
+                <th>Semester</th>
+                <th>Program</th>
+                <th>Nationality</th>
+                <th>College</th>
+                <th>Number of Students</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php 
+            foreach($result as $student): ?>
                 <tr>
-                    <th>Year</th>
-                    <th>Semester</th>
-                    <th>The Programs</th>
-                    <th>Nationality</th>
-                    <th>Colleges</th>
-                    <th>Number of Students</th>
+                    <td><?php echo htmlspecialchars($student["year"]); ?></td>
+                    <td><?php echo htmlspecialchars($student["semester"]); ?></td>
+                    <td><?php echo htmlspecialchars($student["the_programs"]); ?></td>
+                    <td><?php echo htmlspecialchars($student["nationality"]); ?></td>
+                    <td><?php echo htmlspecialchars($student["colleges"]); ?></td>
+                    <td><?php echo htmlspecialchars($student["number_of_students"]); ?></td>
                 </tr>
-            </thead>
-            <tbody>
-                <?php
-                // Loop through the records and display them in the table
-                foreach ($result['records'] as $record):
-                    $year = isset($record['Year']) ? $record['Year'] : 'N/A';
-                    $semester = isset($record['Semester']) ? $record['Semester'] : 'N/A';
-                    $programs = isset($record['The Programs']) ? $record['The Programs'] : 'N/A';
-                    $nationality = isset($record['Nationality']) ? $record['Nationality'] : 'N/A';
-                    $colleges = isset($record['Colleges']) ? $record['Colleges'] : 'N/A';
-                    $studentCount = isset($record['Number of Student:']) ? $record['Number of Student:'] : 'N/A';
-                    echo "<tr>
-                            <td>$year</td>
-                            <td>$semester</td>
-                            <td>$programs</td>
-                            <td>$nationality</td>
-                            <td>$colleges</td>
-                            <td>$studentCount</td>
-                          </tr>";
-                endforeach;
-                ?>
-            </tbody>
-        </table>
-
-        <?php
-        else:
-            echo '<p>No data available or error fetching data.</p>';
-        endif;
-        ?>
-    </div>
+            <?php endforeach; ?> 
+        </tbody>
+    </table>
 </body>
 </html>
