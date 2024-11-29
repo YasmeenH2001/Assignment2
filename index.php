@@ -42,33 +42,37 @@
             color: #333;
         }
     </style>
-</head>
-<body>
-    <h1>UOB IT Bachelor's Students by Nationality</h1>
-    <table>
-        <thead>
-            <tr> 
-                <th>Year</th>
-                <th>Semester</th>
-                <th>Program</th>
-                <th>Nationality</th>
-                <th>College</th>
-                <th>Number of Students</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php 
-            foreach($result as $student): ?>
-                <tr>
-                    <td><?php echo htmlspecialchars($student["year"]); ?></td>
-                    <td><?php echo htmlspecialchars($student["semester"]); ?></td>
-                    <td><?php echo htmlspecialchars($student["the_programs"]); ?></td>
-                    <td><?php echo htmlspecialchars($student["nationality"]); ?></td>
-                    <td><?php echo htmlspecialchars($student["colleges"]); ?></td>
-                    <td><?php echo htmlspecialchars($student["number_of_students"]); ?></td>
-                </tr>
-            <?php endforeach; ?> 
-        </tbody>
-    </table>
-</body>
-</html>
+</head>    
+ <body>        
+     <div class="container">        
+             <h1>University of Bahrain Students Enrollment by Nationality</h1>    
+              <table>           
+                  <thead>   
+                        <tr>      
+                             <th>Year</th>    
+                             <th>Semester</th>  
+                                   <th>The programs</th>        
+                                     <th>Nationality</th>       
+                                      <th>Colleges</th>        
+                                         <th>Number Of Students</th>    
+                                         </tr>               
+                                          </thead>           
+                                          <tbody>             
+                                                <?php        
+                                         foreach($result as $student) {    
+                                                             ?>          
+                                               <tr>                   
+                                                      <td><?php echo $student["year"]; ?></td>   
+                                                  <td><?php echo $student["semester"]; ?></td>   
+                                              <td><?php echo $student["the_programs"]; ?></td>   
+                                  <td><?php echo $student["nationality"]; ?></td>                
+                                           <td><?php echo $student["colleges"]; ?></td>          
+                                                          <td><?php echo $student["number_of_students"]; ?></td>   
+                                                                  </tr>                     
+                                                <?php   
+                                }    ?>          
+                                              </tbody>    
+                                                </table>    
+                                                       </div>  
+                                                       </body> 
+                                                        </html>
